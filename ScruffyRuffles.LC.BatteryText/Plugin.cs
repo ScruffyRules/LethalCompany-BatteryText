@@ -21,9 +21,9 @@ namespace ScruffyRuffles.LC.BatteryText
         {
             PluginLogger = Logger;
             // Plugin startup logic
-            PluginLogger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
+            PluginLogger.LogInfo($"Plugin {modGUID} is loaded!");
             // Initialize Harmony
-            var harmony = new Harmony(PluginInfo.PLUGIN_GUID);
+            var harmony = new Harmony(modGUID);
             harmony.PatchAll();
 
             config = new ConfigA(this);
@@ -40,9 +40,9 @@ namespace ScruffyRuffles.LC.BatteryText
             public bool showTimeRemaining => _showTimeRemaining.Value;
             public float offsetX => _offsetX.Value;
             public float offsetY => _offsetY.Value;
-            public ConfigA(Plugin plugin)
+            public ConfigA(BaseUnityPlugin plugin)
             {
-                config = new ConfigFile(Path.Combine(BepInEx.Paths.ConfigPath, modGUID + ".cfg"), saveOnInit: true, MetadataHelper.GetMetadata(plugin));
+                config = new ConfigFile(Path.Combine(Paths.ConfigPath, modGUID + ".cfg"), saveOnInit: true, MetadataHelper.GetMetadata(plugin));
 
                 _showTimeRemaining = config.Bind("General", "Show Time Remaining", true, "Shows the remaining time under the percentage");
                 _offsetX = config.Bind("General", "Offset X", 0.0f, "Position Offset on the X Axis");
@@ -50,14 +50,7 @@ namespace ScruffyRuffles.LC.BatteryText
 
                 watcher = new FileSystemWatcher(Path.GetDirectoryName(config.ConfigFilePath), "*.cfg")
                 {
-                    NotifyFilter = NotifyFilters.Attributes
-                                 | NotifyFilters.CreationTime
-                                 | NotifyFilters.DirectoryName
-                                 | NotifyFilters.FileName
-                                 | NotifyFilters.LastAccess
-                                 | NotifyFilters.LastWrite
-                                 | NotifyFilters.Security
-                                 | NotifyFilters.Size
+                    NotifyFilter = NotifyFilters.LastWrite
                 };
 
                 watcher.Changed += ConfigFileChanged;

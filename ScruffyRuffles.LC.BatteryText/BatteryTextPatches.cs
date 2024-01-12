@@ -1,5 +1,4 @@
-﻿using GameNetcodeStuff;
-using HarmonyLib;
+﻿using HarmonyLib;
 using System;
 using TMPro;
 using UnityEngine;
@@ -55,12 +54,6 @@ namespace ScruffyRuffles.LC.BatteryText
                     {
                         batteryTexts[i].text = "";
                     }
-                    //batteryTexts[i].text += "\n$" + grabbableObject.scrapValue;
-                    //float weight = grabbableObject.itemProperties.weight;
-                    //weight -= 1;
-                    //weight *= 100;
-                    //batteryTexts[i].text += "\n" + weight.ToString() + " lbs";
-                    //batteryTexts[i].text += "\n" + grabbableObject.itemProperties.isConductiveMetal + " Z";
                 }
                 else
                 {
